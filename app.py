@@ -17,18 +17,18 @@ def info():
         "Usuario": "Jankarlos Crespo"
     })
 
-@app.route("/mensaje", methods=["GET", "POST"])
+@app.route("/mensaje", methods=["POST"])
 def mensaje():
-    if request.method == "GET":
-        return jsonify({"mensajes": mensajes})
+    data= request.get_json()
+    if not data or "mensaje" not in data:
+        return jsonify({"Se encontro un error": "El mensaje no ha sido proporcionado"}), 400
+    
+    mensaje_usuario = data["mensaje"]
+    respuesta = f"Mensaje recibido gracias: {mensaje_usuario}"
+    return jsonify({"respuesta": respuesta}), 200   
 
-    if request.method == "POST":
-        data = request.json
-        if not data or "mensaje" not in data:
-            return jsonify({"Se encontro un error": "El mensaje no ha sido proporcionado"}), 400
+      
 
-        mensajes.append(data["mensaje"])
-        return jsonify({"respuesta": f"Mensaje recibido correctamente: '{data['mensaje']}'"}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
