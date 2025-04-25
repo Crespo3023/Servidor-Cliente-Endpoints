@@ -2,8 +2,6 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-mensajes = []
-
 @app.route("/", methods=["GET"])
 def home():
     return "<h1> Página principal </h1>"
@@ -13,7 +11,7 @@ def home():
 def info():
     return jsonify({
         
-        "version de prueba": "7",
+        "version de prueba": "8",
         "Usuario": "Jankarlos Crespo"
     })
 
